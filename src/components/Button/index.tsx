@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {RectButtonProps} from 'react-native-gesture-handler';
 
 import {Container, TextButton} from './styles';
@@ -14,7 +14,7 @@ interface ButtonProps extends RectButtonProps {
 const Button = ({
   text,
   textColor,
-  disabled,
+  disabled = false,
   backgroundColor,
   icon,
   iconAlign = 'left',
@@ -22,7 +22,7 @@ const Button = ({
   ...props
 }: ButtonProps) => {
   return (
-    <Container backgroundColor={backgroundColor} disabled={disabled} {...props}>
+    <Container disabled={disabled} backgroundColor={backgroundColor} {...props}>
       {children ? (
         children
       ) : (
@@ -36,4 +36,4 @@ const Button = ({
   );
 };
 
-export default Button;
+export default memo(Button);

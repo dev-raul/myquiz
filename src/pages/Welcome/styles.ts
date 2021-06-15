@@ -36,7 +36,7 @@ export const SubTitle = styled.Text`
 `;
 
 export const BtnNext = styled(RectButton)`
-  background-color: ${({theme}) => theme.colors.green};
+  background-color: ${({theme}) => theme.colors.primary};
   justify-content: center;
   align-items: center;
   border-radius: 16px;

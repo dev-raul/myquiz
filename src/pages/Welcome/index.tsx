@@ -12,12 +12,14 @@ import {
   interpolate,
   Extrapolate,
 } from 'react-native-reanimated';
+import {useNavigation} from '@react-navigation/core';
 const {width} = Dimensions.get('screen');
 const Welcome: React.FC = () => {
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
   const startAnimated = useSharedValue(0);
 
   useEffect(() => {
+    console.log(startAnimated);
     startAnimated.value = withTiming(1, {
       duration: 1000,
       easing: Easing.bounce,
@@ -25,9 +27,9 @@ const Welcome: React.FC = () => {
   }, [startAnimated]);
 
   const buttonStyle = useAnimatedStyle(() => {
-    const translateY = Math.round(
-      interpolate(startAnimated.value, [0, 1], [10, 0], Extrapolate.CLAMP),
-    );
+    // const translateY = Math.round(
+    //   interpolate(startAnimated.value, [0, 1], [10, 0], Extrapolate.CLAMP),
+    // );
     return {
       opacity: interpolate(
         startAnimated.value,
@@ -35,7 +37,7 @@ const Welcome: React.FC = () => {
         [0, 1],
         Extrapolate.CLAMP,
       ),
-      transform: [{translateY}],
+      // transform: [{translateY}],
     };
   }, [startAnimated.value]);
 
@@ -56,7 +58,10 @@ const Welcome: React.FC = () => {
           "A essência do conhecimento consiste em aplicá-lo, uma vez possuído."
         </SubTitle>
         <Footer style={[buttonStyle]}>
-          <Button text="Avançar" />
+          <Button
+            text="Avançar"
+            onPress={() => navigation.navigate('SignUp')}
+          />
         </Footer>
       </Content>
     </Container>

@@ -16,11 +16,11 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
+      <StatusBar
+        barStyle={deviceTheme === 'dark' ? 'light-content' : 'dark-content'}
+        backgroundColor={theme.colors.background}
+      />
       <NavigationContainer>
-        <StatusBar
-          barStyle={deviceTheme === 'dark' ? 'light-content' : 'dark-content'}
-          backgroundColor={theme.colors.background}
-        />
         <Routes />
       </NavigationContainer>
     </ThemeProvider>

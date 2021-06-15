@@ -2,23 +2,29 @@ import {DefaultTheme} from 'styled-components';
 import {fonts} from '../utils/listFontName';
 export const dark: DefaultTheme = {
   colors: {
-    green: '#32B768',
-    green_dark: '#2B7A4B',
-    green_light: '#DAF2E4',
+    primary: '#9792E3',
+    secundary: '#7F7CAF',
+    background: '#282a36',
 
-    heading: '#FFFFFF',
+    heading: '#EEEEFF',
     body_dark: '#738078',
     body_light: '#AAB2AD',
 
-    background: '#282a36',
     shape: '#44475a',
     white: '#FFFFFF',
     gray: '#CFCFCF',
 
     blue: '#3D7199',
+    blue_dark: '#005ba1',
     blue_light: '#EBF6FF',
 
+    green: '#61E786',
+    green_dark: '#32B768',
+    green_light: '#DAF2E4',
+
     red: '#E83F5B',
+    red_dark: '#ba0b28',
+    red_light: '#e87b8d',
   },
   fonts,
 };

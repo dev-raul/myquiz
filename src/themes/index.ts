@@ -9,23 +9,29 @@ export interface FontInterface {
 declare module 'styled-components' {
   export interface DefaultTheme {
     colors: {
-      green: string;
-      green_dark: string;
-      green_light: string;
+      primary: string;
+      secundary: string;
+      background: string;
 
       heading: string;
       body_dark: string;
       body_light: string;
 
-      background: string;
       shape: string;
       white: string;
       gray: string;
 
+      green: string;
+      green_dark: string;
+      green_light: string;
+
       blue: string;
+      blue_dark: string;
       blue_light: string;
 
       red: string;
+      red_dark: string;
+      red_light: string;
     };
     fonts: FontInterface;
   }
