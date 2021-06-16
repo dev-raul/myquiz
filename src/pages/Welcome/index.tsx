@@ -60,7 +60,7 @@ const Welcome: React.FC = () => {
         <Footer style={[buttonStyle]}>
           <Button
             text="Avançar"
-            onPress={() => navigation.navigate('SignUp')}
+            onPress={() => navigation.navigate('UserIdentification')}
           />
         </Footer>
       </Content>

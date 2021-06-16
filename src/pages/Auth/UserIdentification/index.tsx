@@ -1,3 +1,4 @@
+import {useNavigation} from '@react-navigation/core';
 import React, {useCallback, useEffect, useState} from 'react';
 import {Keyboard, Platform, TouchableWithoutFeedback} from 'react-native';
 import {
@@ -8,7 +9,8 @@ import {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import Button from '../../components/Button';
+import Button from '../../../components/Button';
+import LoadingFull from '../../../components/LoadingFull';
 import {
   Container,
   KeyboardAvoidingView,
@@ -24,7 +26,8 @@ import {
   ErrorText,
 } from './styles';
 
-const SignUp = () => {
+const UserIdentification = () => {
+  const navigation = useNavigation();
   const [name, setName] = useState<string>();
   const [error, setError] = useState<string>();
   const [isFocused, setIsFocused] = useState(false);
@@ -77,12 +80,12 @@ const SignUp = () => {
   }, []);
 
   const handleConfirmar = useCallback(() => {
-    console.log('confirmar');
     if (!name) {
       setError('O nickname é obrigatório!');
       return;
     }
-  }, [name]);
+    navigation.navigate('UserBirthDay');
+  }, [name, navigation]);
 
   return (
     <Container>
@@ -90,10 +93,11 @@ const SignUp = () => {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <Content>
+            <LoadingFull />
             <Form>
               <FormHeader style={[headerFormStyle]}>
                 <Emoji> {name ? '😄️' : '😃️'} </Emoji>
-                <Title>Precisamos do seu nickname</Title>
+                <Title>Digite seu nickname?</Title>
               </FormHeader>
               <FormBody>
                 <Input
@@ -119,7 +123,7 @@ const SignUp = () => {
                 <Button
                   disabled={!name}
                   onPress={handleConfirmar}
-                  text="Confirmar"
+                  text="Verificar"
                 />
               </FooterForm>
             </Form>
@@ -129,4 +133,4 @@ const SignUp = () => {
     </Container>
   );
 };
-export default SignUp;
+export default UserIdentification;
