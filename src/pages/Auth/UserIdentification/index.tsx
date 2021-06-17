@@ -29,6 +29,7 @@ import {
 const UserIdentification = () => {
   const navigation = useNavigation();
   const [name, setName] = useState<string>();
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>();
   const [isFocused, setIsFocused] = useState(false);
 
@@ -84,53 +85,61 @@ const UserIdentification = () => {
       setError('O nickname é obrigatório!');
       return;
     }
-    navigation.navigate('UserBirthDay');
+    setLoading(true);
+
+    //TEMPORÁRIO
+    setTimeout(() => {
+      setLoading(false);
+      navigation.navigate('UserBirthDay');
+    }, 4000);
   }, [name, navigation]);
 
   return (
-    <Container>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <Content>
-            <LoadingFull />
-            <Form>
-              <FormHeader style={[headerFormStyle]}>
-                <Emoji> {name ? '😄️' : '😃️'} </Emoji>
-                <Title>Digite seu nickname?</Title>
-              </FormHeader>
-              <FormBody>
-                <Input
-                  // placeholder="nickname"
-                  onBlur={handleInputBlur}
-                  onFocus={handleInputFocus}
-                  isFocused={isFocused}
-                  isValue={!!name}
-                  onChangeText={text => {
-                    if (error && text) {
-                      setError('');
-                    }
-                    setName(text);
-                  }}
-                />
-                {!!error && (
-                  <Error>
-                    <ErrorText>⚠️ {error}</ErrorText>
-                  </Error>
-                )}
-              </FormBody>
-              <FooterForm style={[footerStyle]}>
-                <Button
-                  disabled={!name}
-                  onPress={handleConfirmar}
-                  text="Verificar"
-                />
-              </FooterForm>
-            </Form>
-          </Content>
-        </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
-    </Container>
+    <>
+      <LoadingFull loading={loading} />
+      <Container>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <Content>
+              <Form>
+                <FormHeader style={[headerFormStyle]}>
+                  <Emoji> {name ? '😄️' : '😃️'} </Emoji>
+                  <Title>Digite seu nickname?</Title>
+                </FormHeader>
+                <FormBody>
+                  <Input
+                    // placeholder="nickname"
+                    onBlur={handleInputBlur}
+                    onFocus={handleInputFocus}
+                    isFocused={isFocused}
+                    isValue={!!name}
+                    onChangeText={text => {
+                      if (error && text) {
+                        setError('');
+                      }
+                      setName(text);
+                    }}
+                  />
+                  {!!error && (
+                    <Error>
+                      <ErrorText>⚠️ {error}</ErrorText>
+                    </Error>
+                  )}
+                </FormBody>
+                <FooterForm style={[footerStyle]}>
+                  <Button
+                    disabled={!name}
+                    onPress={handleConfirmar}
+                    text="Verificar"
+                  />
+                </FooterForm>
+              </Form>
+            </Content>
+          </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
+      </Container>
+    </>
   );
 };
 export default UserIdentification;

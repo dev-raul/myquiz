@@ -26,9 +26,11 @@ import {
   BirthDayText,
 } from './styles';
 import {format} from 'date-fns';
+import LoadingFull from '../../../components/LoadingFull';
 
 const UserBirthDay = () => {
   const [birthDay, setBirthDay] = useState<Date>(new Date());
+  const [loading, setLoading] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(
     Platform.OS === 'ios' ? true : false,
   );
@@ -90,61 +92,68 @@ const UserBirthDay = () => {
   );
 
   const handleConfirmar = useCallback(() => {
-    if (!birthDay) {
+    if (!isFocused) {
       setError('O nascimento é obrigatório!');
       return;
     }
-  }, [birthDay]);
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 4000);
+  }, [isFocused]);
 
   return (
-    <Container>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <Content>
-            <Form>
-              <FormHeader style={[headerFormStyle]}>
-                <Emoji> {birthDay ? '😄️' : '😃️'} </Emoji>
-                <Title>Qual a data do seu nascimento?</Title>
-              </FormHeader>
-              <FormBody>
-                {showDatePicker && (
-                  <DateTimePicker
-                    value={birthDay}
-                    mode="datetime"
-                    display="calendar"
-                    onChange={handleChangeTime}
-                    maximumDate={new Date()}
-                  />
-                )}
+    <>
+      <LoadingFull loading={loading} />
+      <Container>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <Content>
+              <Form>
+                <FormHeader style={[headerFormStyle]}>
+                  <Emoji> {birthDay ? '😄️' : '😃️'} </Emoji>
+                  <Title>Qual a data do seu nascimento?</Title>
+                </FormHeader>
+                <FormBody>
+                  {showDatePicker && (
+                    <DateTimePicker
+                      value={birthDay}
+                      mode="datetime"
+                      display="calendar"
+                      onChange={handleChangeTime}
+                      maximumDate={new Date()}
+                    />
+                  )}
 
-                {Platform.OS === 'android' && (
-                  <BirthDay
-                    isFocused={isFocused}
-                    onPress={() => setShowDatePicker(oldState => !oldState)}>
-                    <BirthDayText>
-                      {isFocused && `${format(birthDay, 'dd/MM/yyyy')} `}
-                    </BirthDayText>
-                  </BirthDay>
-                )}
-                {!!error && (
-                  <Error>
-                    <ErrorText>⚠️ {error}</ErrorText>
-                  </Error>
-                )}
-              </FormBody>
-              <FooterForm style={[footerStyle]}>
-                <Button
-                  disabled={!birthDay}
-                  onPress={handleConfirmar}
-                  text="Confirmar"
-                />
-              </FooterForm>
-            </Form>
-          </Content>
-        </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
-    </Container>
+                  {Platform.OS === 'android' && (
+                    <BirthDay
+                      isFocused={isFocused}
+                      onPress={() => setShowDatePicker(oldState => !oldState)}>
+                      <BirthDayText>
+                        {isFocused && `${format(birthDay, 'dd/MM/yyyy')} `}
+                      </BirthDayText>
+                    </BirthDay>
+                  )}
+                  {!!error && (
+                    <Error>
+                      <ErrorText>⚠️ {error}</ErrorText>
+                    </Error>
+                  )}
+                </FormBody>
+                <FooterForm style={[footerStyle]}>
+                  <Button
+                    disabled={!isFocused}
+                    onPress={handleConfirmar}
+                    text="Confirmar"
+                  />
+                </FooterForm>
+              </Form>
+            </Content>
+          </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
+      </Container>
+    </>
   );
 };
 export default UserBirthDay;
