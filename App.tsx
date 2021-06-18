@@ -5,6 +5,7 @@ import {DefaultTheme, ThemeProvider} from 'styled-components';
 import * as themes from './src/themes';
 import {NavigationContainer} from '@react-navigation/native';
 import Routes from './src/routes';
+import AuthProvider from './src/context/AuthProvider';
 const App = () => {
   const deviceTheme = useColorScheme() || 'light';
   const [theme, setTheme] = useState<DefaultTheme>(themes.light);
@@ -16,13 +17,15 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <StatusBar
-        barStyle={deviceTheme === 'dark' ? 'light-content' : 'dark-content'}
-        backgroundColor={theme.colors.background}
-      />
-      <NavigationContainer>
-        <Routes />
-      </NavigationContainer>
+      <AuthProvider>
+        <StatusBar
+          barStyle={deviceTheme === 'dark' ? 'light-content' : 'dark-content'}
+          backgroundColor={theme.colors.background}
+        />
+        <NavigationContainer>
+          <Routes />
+        </NavigationContainer>
+      </AuthProvider>
     </ThemeProvider>
   );
 };

@@ -27,8 +27,10 @@ import {
 } from './styles';
 import {format} from 'date-fns';
 import LoadingFull from '../../../components/LoadingFull';
+import useAuth from '../../../hooks/useAuth';
 
 const UserBirthDay = () => {
+  const {login} = useAuth();
   const [birthDay, setBirthDay] = useState<Date>(new Date());
   const [loading, setLoading] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(
@@ -99,8 +101,9 @@ const UserBirthDay = () => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
+      login();
     }, 4000);
-  }, [isFocused]);
+  }, [isFocused, login]);
 
   return (
     <>
